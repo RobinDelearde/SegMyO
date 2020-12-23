@@ -1,5 +1,5 @@
 # SegMyO
-Segment My Object - A pipeline to extract segmented objects in images based on labels or bounding boxes
+Segment my object - A pipeline to extract segmented objects in images based on labels or bounding boxes
 
 This pipeline is made of the 2 parts:
 - SegMyO_segmentation.py: segmentation with a pre-trained model
@@ -14,7 +14,7 @@ The code also provides a complete evaluation on PASCAL VOC 2012:
 If you use or adapt this code, thanks to cite this paper:\
 @inproceedings{delearde_visapp2021,\
 author = {Deléarde, R. and Kurtz, C. and Dejean, P. and Wendling, L.},\
-title = {Segment My Object - A pipeline to extract segmented objects in images based on labels or bounding boxes},\
+title = {Segment my object: A pipeline to extract segmented objects in images based on labels or bounding boxes},\
 booktitle = {Int. Conf. on Computer Vision Theory and Applications (VISAPP)},\
 year = {2021},\
 pages = {XX--XX}\
