@@ -10,7 +10,6 @@ date: 09/2020
 import numpy as np
 from PIL import Image
 from xml.dom import minidom
-from extract_seg_masks import extract_seg_masks, get_class_and_bbox
 
 #%% Functions: extract label and bbox from PASCAL VOC annotations
 
@@ -28,6 +27,18 @@ def convert_PASCALVOC_annot(label):
         return 'tv monitor'
     else:
         return label
+
+def get_class(mask, class_gt):
+    x,y = np.nonzero(mask)
+    return class_gt[x[0],y[0]]
+
+def bounding_box(mask):
+    x,y = np.nonzero(mask)
+    return [x.min(), x.max()+1, y.min(), y.max()+1]
+
+def get_class_and_bbox(mask, class_gt):
+    x,y = np.nonzero(mask)
+    return class_gt[x[0],y[0]], [x.min(), max(x.max(),x.min()+1), y.min(), max(y.max(),y.min()+1)]
 
 # Extract label and bbox from PASCAL VOC annotations
 def get_bbox_and_label(item, train_set, class_gt):
@@ -47,6 +58,23 @@ def get_bbox_and_label(item, train_set, class_gt):
         item_bbox_ymax = int(item_bbox_dom.getElementsByTagName('ymax')[0].firstChild.data)-1
         item_bbox = np.array([item_bbox_ymin, item_bbox_ymax, item_bbox_xmin, item_bbox_xmax], dtype=np.uint8)
     return item_label, item_bbox
+
+def extract_seg_masks(img_seg):
+    background = (img_seg==0).astype('uint8')
+    objects_list = []
+    level = img_seg.max()
+    if level==255:
+        borders = (img_seg==255).astype('uint8')
+        img_seg-=borders*level
+        level = img_seg.max()
+    elif level==0:
+        borders = []
+    while level>0:
+        object_seg = (img_seg==level).astype('uint8')
+        objects_list.append(object_seg)
+        img_seg-=object_seg*level
+        level = img_seg.max()
+    return objects_list, background, borders
 
 # Extract items for a given object
 def extract_items(dir_path, img_name, train_set):
