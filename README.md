@@ -22,6 +22,6 @@ If you use or adapt this code, thanks to cite this paper:
   title = {Segment my object: A pipeline to extract segmented objects in images based on labels or bounding boxes},
   booktitle = {Int. Conf. on Computer Vision Theory and Applications (VISAPP)},
   year = {2021},
-  pages = {XX--XX}
+  pages = {618--625}
 }
 ```
